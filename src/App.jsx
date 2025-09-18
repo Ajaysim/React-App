@@ -1,13 +1,6 @@
 /*
 ReactPostsPaginationApp.jsx
-Single-file React app (default export) that implements the requirements:
-- Fetches posts from https://jsonplaceholder.typicode.com/posts
-- Shows Loading... for 5 seconds on startup
-- Displays 6 cards per page with bottom pagination (page numbers, Prev, Next)
-- Clicking a red cross removes the card from the global store and the view stays at 6 cards (shifts items from following pages)
-- Clicking a page number jumps to that page
-- Uses React Context API to store application state
-- Each card shows a unique image using post id
+Updated version: Full 100 posts, proper deletion shifting, Context API, 6 cards per page, 5s loading
 */
 
 import React, { useEffect, useState, useContext, createContext, useMemo } from 'react';
@@ -42,7 +35,7 @@ function PostsProvider({ children }) {
 
     const fetchPosts = async () => {
       try {
-        const fetchPromise = fetch('https://jsonplaceholder.typicode.com/posts?_limit=18').then(r => r.json());
+        const fetchPromise = fetch('https://jsonplaceholder.typicode.com/posts').then(r => r.json());
         const delay = new Promise(resolve => setTimeout(resolve, 5000));
         const [data] = await Promise.all([fetchPromise, delay]);
         if (!mounted) return;
